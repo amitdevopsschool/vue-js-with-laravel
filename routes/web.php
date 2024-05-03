@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,12 +41,18 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 All Admin Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:admin'])->group(function () {
+
+Route::middleware(['auth', 'user-access:admin'])->prefix('admin')->group(function () {
   
-    Route::get('/admin/dashboard', [HomeController::class, 'adminHome'])->name('admin.home');
+    Route::get('/dashboard', [HomeController::class, 'adminHome'])->name('admin.home');
     Route::get('/user/logout', [HomeController::class, 'Logout'])->name('user.logout');
 
+    // profile routes here
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::post('/save/profile', [ProfileController::class, 'store'])->name('save.profile');
+
 });
+
   
 /*------------------------------------------
 --------------------------------------------

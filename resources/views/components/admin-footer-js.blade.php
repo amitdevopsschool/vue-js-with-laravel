@@ -30,3 +30,24 @@
 			});
 		});
 	</script>
+	<script>
+		$(document).ready(function(f){
+			$('#formSubmit').on('submit',(function(e){
+				if($(this).parsley().validate()){
+				e.preventDefault();
+				var formData = new FormData(this);
+				$.ajax({
+					type: 'POST',
+					url: $(this).attr('action'),
+					data:formData,
+					cache: false,
+					contentType:false,
+					processData:false,
+					success:function(result){
+						console.log(result);
+					}
+				});
+			}
+			}));
+		});
+	</script>
